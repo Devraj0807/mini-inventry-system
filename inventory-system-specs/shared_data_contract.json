@@ -1,0 +1,154 @@
+{
+  "system": "Mini Inventory System",
+  "version": "1.0.0",
+  "mockProducts": [
+    {
+      "id": 1,
+      "sku": "ELEC-101",
+      "name": "Logitech MX Master 3S Mouse",
+      "category": "Electronics",
+      "unitPrice": 99.99,
+      "quantity": 14,
+      "minStockLevel": 5,
+      "status": "IN_STOCK",
+      "createdAt": "2026-11-20T10:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 2,
+      "sku": "ELEC-102",
+      "name": "Dell UltraSharp 27\" 4K Monitor",
+      "category": "Electronics",
+      "unitPrice": 449.50,
+      "quantity": 3,
+      "minStockLevel": 5,
+      "status": "LOW_STOCK",
+      "createdAt": "2026-11-20T10:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 3,
+      "sku": "ELEC-103",
+      "name": "Mechanical Keyboard RGB",
+      "category": "Electronics",
+      "unitPrice": 119.00,
+      "quantity": 0,
+      "minStockLevel": 4,
+      "status": "OUT_OF_STOCK",
+      "createdAt": "2026-11-20T10:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 4,
+      "sku": "FURN-201",
+      "name": "Ergonomic Mesh Office Chair",
+      "category": "Furniture",
+      "unitPrice": 249.99,
+      "quantity": 8,
+      "minStockLevel": 3,
+      "status": "IN_STOCK",
+      "createdAt": "2026-11-21T11:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 5,
+      "sku": "STAT-301",
+      "name": "A5 Hardcover Dotted Notebook",
+      "category": "Stationery",
+      "unitPrice": 12.50,
+      "quantity": 45,
+      "minStockLevel": 10,
+      "status": "IN_STOCK",
+      "createdAt": "2026-11-22T09:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 6,
+      "sku": "STAT-302",
+      "name": "Gel Ink Rollerball Pen (Pack of 12)",
+      "category": "Stationery",
+      "unitPrice": 18.00,
+      "quantity": 2,
+      "minStockLevel": 8,
+      "status": "LOW_STOCK",
+      "createdAt": "2026-11-23T14:00:00Z",
+      "updatedAt": "2026-11-27T08:30:00Z"
+    }
+  ],
+  "mockTransactions": [
+    {
+      "id": 1,
+      "productId": 1,
+      "productName": "Logitech MX Master 3S Mouse",
+      "type": "IN",
+      "quantity": 20,
+      "previousQuantity": 0,
+      "newQuantity": 20,
+      "reason": "Initial supplier delivery PO-2026-01",
+      "timestamp": "2026-11-20T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "productId": 1,
+      "productName": "Logitech MX Master 3S Mouse",
+      "type": "OUT",
+      "quantity": 6,
+      "previousQuantity": 20,
+      "newQuantity": 14,
+      "reason": "Customer order #10041",
+      "timestamp": "2026-11-26T14:20:00Z"
+    },
+    {
+      "id": 3,
+      "productId": 2,
+      "productName": "Dell UltraSharp 27\" 4K Monitor",
+      "type": "IN",
+      "quantity": 5,
+      "previousQuantity": 0,
+      "newQuantity": 5,
+      "reason": "Initial stock delivery",
+      "timestamp": "2026-11-20T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "productId": 2,
+      "productName": "Dell UltraSharp 27\" 4K Monitor",
+      "type": "OUT",
+      "quantity": 2,
+      "previousQuantity": 5,
+      "newQuantity": 3,
+      "reason": "Floor display & customer pickup",
+      "timestamp": "2026-11-27T08:30:00Z"
+    },
+    {
+      "id": 5,
+      "productId": 3,
+      "productName": "Mechanical Keyboard RGB",
+      "type": "IN",
+      "quantity": 10,
+      "previousQuantity": 0,
+      "newQuantity": 10,
+      "reason": "Initial delivery",
+      "timestamp": "2026-11-20T10:00:00Z"
+    },
+    {
+      "id": 6,
+      "productId": 3,
+      "productName": "Mechanical Keyboard RGB",
+      "type": "OUT",
+      "quantity": 10,
+      "previousQuantity": 10,
+      "newQuantity": 0,
+      "reason": "Bulk clearance order #9822",
+      "timestamp": "2026-11-26T16:45:00Z"
+    }
+  ],
+  "mockReportSummary": {
+    "totalProducts": 6,
+    "totalUnitsInStock": 72,
+    "totalInventoryValuation": 6484.81,
+    "lowStockCount": 2,
+    "outOfStockCount": 1,
+    "recentMovementsCountToday": 4
+  }
+}
