@@ -1,12 +1,12 @@
 const { getDb } = require('./database');
 
 const products = [
-  { sku: 'ELEC-101', name: 'Logitech MX Master 3S Mouse',          category: 'Electronics', unit_price: 99.99,  quantity: 20, min_stock_level: 5 },
-  { sku: 'ELEC-102', name: 'Dell UltraSharp 27" 4K Monitor',       category: 'Electronics', unit_price: 449.50, quantity: 3,  min_stock_level: 5 },
-  { sku: 'ELEC-103', name: 'Mechanical Keyboard RGB',               category: 'Electronics', unit_price: 119.00, quantity: 0,  min_stock_level: 4 },
-  { sku: 'AUDIO-201', name: 'Sony WH-1000XM5 Headphones',          category: 'Audio',       unit_price: 399.00, quantity: 20, min_stock_level: 4 },
-  { sku: 'FURN-401',  name: 'Ergonomic Office Chair',               category: 'Furniture',   unit_price: 349.00, quantity: 8,  min_stock_level: 2 },
-  { sku: 'STAT-302',  name: 'Gel Ink Rollerball Pen (Pack of 12)',  category: 'Stationery',  unit_price: 18.00,  quantity: 2,  min_stock_level: 8 },
+  { sku: 'ELEC-101', name: 'Logitech MX Master 3S Mouse',          category: 'Electronics', unit_price: 8499,  quantity: 20, min_stock_level: 5 },
+  { sku: 'ELEC-102', name: 'Dell UltraSharp 27" 4K Monitor',       category: 'Electronics', unit_price: 37990, quantity: 3,  min_stock_level: 5 },
+  { sku: 'ELEC-103', name: 'Mechanical Keyboard RGB',               category: 'Electronics', unit_price: 9999,  quantity: 0,  min_stock_level: 4 },
+  { sku: 'AUDIO-201', name: 'Sony WH-1000XM5 Headphones',          category: 'Audio',       unit_price: 29990, quantity: 20, min_stock_level: 4 },
+  { sku: 'FURN-401',  name: 'Ergonomic Office Chair',               category: 'Furniture',   unit_price: 24999, quantity: 8,  min_stock_level: 2 },
+  { sku: 'STAT-302',  name: 'Gel Ink Rollerball Pen (Pack of 12)',  category: 'Stationery',  unit_price: 299,   quantity: 2,  min_stock_level: 8 },
 ];
 
 function seed() {

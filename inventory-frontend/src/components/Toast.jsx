@@ -13,7 +13,9 @@ export default function Toast({ toast, onClose }) {
   const isError = toast.type === 'error';
   return (
     <div className={`fixed bottom-5 right-5 z-50 flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg border max-w-sm
-      ${isError ? 'bg-red-50 border-red-200 text-red-800' : 'bg-green-50 border-green-200 text-green-800'}`}>
+      ${isError
+        ? 'bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300'
+        : 'bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300'}`}>
       {isError
         ? <XCircle className="w-5 h-5 mt-0.5 shrink-0 text-red-500" />
         : <CheckCircle className="w-5 h-5 mt-0.5 shrink-0 text-green-500" />}
