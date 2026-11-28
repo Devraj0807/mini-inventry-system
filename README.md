@@ -1,88 +1,120 @@
-# Mini Inventory Backend
+﻿# 📦 Mini Inventory System
 
-A production-quality Node.js/Express REST API implementing the **Mini Inventory System** spec.
+A full-stack inventory management web app built for a college hackathon.
 
-## Stack
-- **Runtime:** Node.js
-- **Framework:** Express 4
-- **Database:** SQLite (via `better-sqlite3` — synchronous, zero-config)
-- **Validation:** Zod
+**Team:** Devraj Mahur · Yash Bhardwaj · Abhay Raj
 
-## Project Structure
+---
 
-```
-mini-inventory-backend/
-├── src/
-│   ├── index.js                        # App entry point & server bootstrap
-│   ├── db/
-│   │   ├── database.js                 # DB connection + schema init
-│   │   └── seed.js                     # Sample data seed (runs on startup)
-│   ├── routes/
-│   │   ├── products.routes.js
-│   │   ├── inventory.routes.js
-│   │   └── reports.routes.js
-│   ├── controllers/
-│   │   ├── products.controller.js      # CRUD for products
-│   │   ├── inventory.controller.js     # Stock IN/OUT movement
-│   │   └── reports.controller.js      # Summary KPIs & low-stock alert
-│   └── middleware/
-│       └── errorHandler.js            # Global error + 404 handler
-├── package.json
-└── README.md
-```
+## 🛠️ Tech Stack
 
-## Setup & Run
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite + Tailwind CSS + Recharts |
+| Backend | Node.js + Express |
+| Database | SQLite (sql.js — no installation needed) |
+
+---
+
+## 🚀 How to Run
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) v18 or above
+- Git
+
+---
+
+### Step 1 — Clone the Repository
 
 ```bash
-# Install dependencies
+git clone https://github.com/Devraj0807/mini-inventry-system.git
+cd mini-inventry-system
+```
+
+---
+
+### Step 2 — Install Backend Dependencies
+
+```bash
 npm install
-
-# Start development server (auto-restarts on save)
-npm run dev
-
-# Or start production server
-npm start
 ```
 
-The DB file (`inventory.db`) is created automatically in the project root on first run, and seeded with 6 sample products.
+---
 
-## API Endpoints
-
-| Method | Path                       | Description                        |
-|--------|----------------------------|------------------------------------|
-| GET    | `/api/products`            | List products (search/filter)      |
-| POST   | `/api/products`            | Create new product                 |
-| GET    | `/api/products/:id`        | Get product + recent movements     |
-| PUT    | `/api/products/:id`        | Update product metadata            |
-| DELETE | `/api/products/:id`        | Delete product + all history       |
-| POST   | `/api/inventory/movement`  | Stock IN / OUT adjustment          |
-| GET    | `/api/reports/summary`     | Dashboard KPIs                     |
-| GET    | `/api/reports/low-stock`   | Products at or below alert level   |
-
-## Query Parameters for `GET /api/products`
-
-| Param      | Values                                          |
-|------------|-------------------------------------------------|
-| `search`   | Any string — matches name or SKU               |
-| `category` | Category name (case-insensitive)                |
-| `status`   | `all` \| `in_stock` \| `low_stock` \| `out_of_stock` |
-
-## Example Requests
+### Step 3 — Install Frontend Dependencies
 
 ```bash
-# Get all low-stock products
-curl http://localhost:3000/api/products?status=low_stock
-
-# Create a product
-curl -X POST http://localhost:3000/api/products \
-  -H "Content-Type: application/json" \
-  -d '{"sku":"AUDIO-501","name":"Sony WH-1000XM5","category":"Audio","unitPrice":399,"initialQuantity":10,"minStockLevel":4}'
-
-# Stock OUT
-curl -X POST http://localhost:3000/api/inventory/movement \
-  -H "Content-Type: application/json" \
-  -d '{"productId":2,"type":"OUT","quantity":2,"reason":"Customer Store Sale #8812"}'
-
-# Dashboard summary
-curl http://localhost:3000/api/reports/summary
+cd inventory-frontend
+npm install
+cd ..
 ```
+
+---
+
+### Step 4 — Run the Backend (Terminal 1)
+
+```bash
+node src/index.js
+```
+
+> Server starts at **http://localhost:3000**
+> Database is created and seeded automatically on first run.
+
+---
+
+### Step 5 — Run the Frontend (Terminal 2)
+
+```bash
+cd inventory-frontend
+npm run dev
+```
+
+> App opens at **http://localhost:5173**
+
+---
+
+## ✨ Features
+
+- 📋 **Product Management** — Add, Edit, Delete products with full validation
+- 📦 **Stock In / Out** — Adjust stock with reason tracking and full audit trail
+- 🔔 **Low Stock Alerts** — Notification bell in navbar shows real-time alerts
+- 📊 **Dashboard / Reports** — KPI cards, bar charts, pie chart, recent transactions
+- 🌙 **Dark Mode** — Toggle between light and dark theme (saved in browser)
+- 💰 **Indian Rupee (₹)** — All prices in INR with Indian number formatting
+
+---
+
+## 📁 Project Structure
+
+```
+mini-inventory-system/
+├── src/
+│   ├── index.js                  # Express server entry point
+│   ├── db/
+│   │   ├── database.js           # sql.js SQLite wrapper
+│   │   └── seed.js               # Sample product data (auto-runs on first start)
+│   ├── controllers/              # Business logic
+│   ├── routes/                   # API route definitions
+│   └── middleware/               # Error handlers
+├── inventory-frontend/
+│   ├── src/
+│   │   ├── App.jsx               # Navbar, routing, dark mode, notification bell
+│   │   ├── pages/
+│   │   │   ├── ProductsPage.jsx  # Product table with CRUD
+│   │   │   └── ReportPage.jsx    # Dashboard with charts
+│   │   ├── components/           # Modal, StockModal, Toast, etc.
+│   │   └── api.js                # REST API client
+│   └── vite.config.js            # Proxy /api → localhost:3000
+├── inventory-system-specs/       # Project specification docs
+└── test.js                       # Backend integration tests (15 tests)
+```
+
+---
+
+## 🧪 Run Backend Tests
+
+```bash
+node test.js
+```
+
+All 15 integration tests should pass ✅
