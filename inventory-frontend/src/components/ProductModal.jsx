@@ -4,6 +4,29 @@ import { CATEGORIES } from '../types';
 
 const EMPTY = { sku: '', name: '', category: 'Electronics', unitPrice: '', initialQuantity: '', minStockLevel: '5' };
 
+const inputBase = "w-full px-3 py-2 text-sm border rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 transition bg-white dark:bg-gray-800 text-gray-900 dark:text-white";
+
+// Field defined OUTSIDE to prevent focus loss on re-render
+function Field({ label, field, type, placeholder, disabled, value, onChange, error }) {
+  const t = type || "text";
+  const ph = placeholder || "";
+  const dis = disabled || false;
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">{label}</label>
+      <input
+        type={t}
+        value={value}
+        placeholder={ph}
+        disabled={dis}
+        onChange={e => onChange(field, e.target.value)}
+        className={inputBase + " " + (dis ? "opacity-60 cursor-not-allowed bg-gray-100 dark:bg-gray-800/60" : "") + " " + (error ? "border-red-400 bg-red-50 dark:bg-red-950" : "border-gray-300 dark:border-gray-700")}
+      />
+      {error && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{error}</p>}
+    </div>
+  );
+}
+
 export default function ProductModal({ open, product, onSave, onClose }) {
   const [form, setForm] = useState(EMPTY);
   const [errors, setErrors] = useState({});
@@ -47,24 +70,6 @@ export default function ProductModal({ open, product, onSave, onClose }) {
 
   if (!open) return null;
 
-  const inputBase = "w-full px-3 py-2 text-sm border rounded-lg outline-none focus:ring-2 focus:ring-indigo-500 transition bg-white dark:bg-gray-800 text-gray-900 dark:text-white";
-
-  const Field = ({ label, field, type = 'text', placeholder = '', disabled = false }) => (
-    <div>
-      <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">{label}</label>
-      <input
-        type={type}
-        value={form[field]}
-        placeholder={placeholder}
-        disabled={disabled}
-        step={type === 'number' && field === 'unitPrice' ? '0.01' : undefined}
-        onChange={e => set(field, e.target.value)}
-        className={`${inputBase} ${disabled ? 'opacity-60 cursor-not-allowed bg-gray-100 dark:bg-gray-800/60' : ''} ${errors[field] ? 'border-red-400 bg-red-50 dark:bg-red-950' : 'border-gray-300 dark:border-gray-700'}`}
-      />
-      {errors[field] && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors[field]}</p>}
-    </div>
-  );
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
       <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
@@ -78,7 +83,8 @@ export default function ProductModal({ open, product, onSave, onClose }) {
         </div>
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <Field label="SKU / Item Code *" field="sku" placeholder="e.g. ELEC-101" disabled={isEdit} />
+            <Field label="SKU / Item Code *" field="sku" placeholder="e.g. ELEC-101"
+              disabled={isEdit} value={form.sku} onChange={set} error={errors.sku} />
             <div>
               <label className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Category *</label>
               <select
@@ -89,11 +95,16 @@ export default function ProductModal({ open, product, onSave, onClose }) {
               </select>
             </div>
           </div>
-          <Field label="Product Name *" field="name" placeholder="e.g. Logitech MX Master 3S" />
+          <Field label="Product Name *" field="name" placeholder="e.g. HP 15s i5 Laptop"
+          value={form.name} onChange={set} error={errors.name} />
           <div className="grid grid-cols-3 gap-4">
-            <Field label="Unit Price (₹) *" field="unitPrice" type="number" placeholder="0" />
-            <Field label={isEdit ? 'Current Qty' : 'Initial Qty *'} field="initialQuantity" type="number" placeholder="0" disabled={isEdit} />
-            <Field label="Alert Threshold *" field="minStockLevel" type="number" placeholder="5" />
+            <Field label="Unit Price (Rs.) *" field="unitPrice" type="number" placeholder="0"
+              value={form.unitPrice} onChange={set} error={errors.unitPrice} />
+            <Field label={isEdit ? "Current Qty" : "Initial Qty *"} field="initialQuantity"
+              type="number" placeholder="0" disabled={isEdit}
+              value={form.initialQuantity} onChange={set} error={errors.initialQuantity} />
+            <Field label="Alert Threshold *" field="minStockLevel" type="number" placeholder="5"
+              value={form.minStockLevel} onChange={set} error={errors.minStockLevel} />
           </div>
           {isEdit && (
             <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg px-3 py-2">
