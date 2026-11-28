@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Plus, Search, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Search, Pencil, Trash2, MinusCircle, PlusCircle } from 'lucide-react';
 import { fetchProducts, createProduct, updateProduct, deleteProduct, adjustStock } from '../api';
 import { CATEGORIES, getStockStatus } from '../types';
 import StatusBadge from '../components/StatusBadge';
@@ -15,7 +15,7 @@ export default function ProductsPage({ onToast, onRefresh }) {
   const [statusFilter, setStatusFilter] = useState('All');
 
   const [productModal, setProductModal] = useState({ open: false, product: null });
-  const [stockModal, setStockModal] = useState({ open: false, product: null });
+  const [stockModal, setStockModal] = useState({ open: false, product: null, initialMode: 'IN' });
   const [deleteDialog, setDeleteDialog] = useState({ open: false, product: null });
 
   const loadProducts = useCallback(async () => {
@@ -70,7 +70,7 @@ export default function ProductsPage({ onToast, onRefresh }) {
       await adjustStock(payload);
       const verb = payload.type === 'IN' ? 'added to' : 'deducted from';
       onToast({ type: 'success', message: `${payload.quantity} units ${verb} stock successfully!` });
-      setStockModal({ open: false, product: null });
+      setStockModal({ open: false, product: null, initialMode: 'IN' });
       await refresh();
     } catch (err) {
       onToast({ type: 'error', message: err.message });
@@ -155,7 +155,25 @@ export default function ProductsPage({ onToast, onRefresh }) {
                   <td className="px-4 py-3"><StatusBadge product={p} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button onClick={() => setStockModal({ open: true, product: p })}
+                      {/* Restock button — only for low/out of stock */}
+                      {p.quantity <= p.minStockLevel && (
+                        <button onClick={() => setStockModal({ open: true, product: p, initialMode: 'IN' })}
+                          title="Restock this item"
+                          className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-900/40 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/60 transition-colors whitespace-nowrap">
+                          <PlusCircle className="w-3.5 h-3.5" /> Restock
+                        </button>
+                      )}
+                      {/* Reduce button — only for items with stock above threshold */}
+                      {p.quantity > p.minStockLevel && (
+                        <button onClick={() => setStockModal({ open: true, product: p, initialMode: 'OUT' })}
+                          title="Reduce stock for this item"
+                          className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-orange-700 dark:text-orange-300 bg-orange-50 dark:bg-orange-900/40 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900/60 transition-colors whitespace-nowrap">
+                          <MinusCircle className="w-3.5 h-3.5" /> Reduce
+                        </button>
+                      )}
+                      {/* Always show In/Out for full control */}
+                      <button onClick={() => setStockModal({ open: true, product: p, initialMode: 'IN' })}
+                        title="Adjust stock (In or Out)"
                         className="px-2.5 py-1.5 text-xs font-medium text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-900/40 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors whitespace-nowrap">
                         In / Out
                       </button>

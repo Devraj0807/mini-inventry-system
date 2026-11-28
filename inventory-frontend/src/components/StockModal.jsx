@@ -9,14 +9,14 @@ const DRAIN_REASONS = [
   "Write-off / Disposal",
 ];
 
-export default function StockModal({ open, product, onSave, onClose }) {
-  const [mode, setMode] = useState('IN');   // 'IN' | 'OUT' | 'DRAIN'
+export default function StockModal({ open, product, onSave, onClose, initialMode }) {
+  const [mode, setMode] = useState(initialMode || 'IN');   // 'IN' | 'OUT' | 'DRAIN'
   const [quantity, setQuantity] = useState('');
   const [reason, setReason] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (open) { setMode('IN'); setQuantity(''); setReason(''); setError(''); }
+    if (open) { setMode(initialMode || 'IN'); setQuantity(initialMode === 'DRAIN' && product ? String(product.quantity) : ''); setReason(''); setError(''); }
   }, [open, product]);
 
   if (!open || !product) return null;
